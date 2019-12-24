@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrption{% endblock %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Libelle</th>
+             <th colsan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for afs in services %}
+        <tr>
+            
+            <td>{{afs.id}}</td>
+            <td>{{afs.libelle}}</td>
+            <td><a name="" id="" class="btn btn-primary" href="{{ path("edit", {'id':afs.id}) }}" role="button">Editer</a></td>
+            <td>
+        <form methode="post" action="{{ path("sup", {'id':afs.id}) }}" style="display:inline-block"
+        onsubmit="return confirm('Vouler-Vous Vraiment supprimer')">
+          <input type="hidden" class="form-control" name="_method" value="DELETE" >
+           <input type="hidden" class="form-control" name="_token" value="{{csrf_token('delete' ~ afs.id)}}" >
+        <button class="btn btn-danger">Supprimer</button>
+        
+            
+            </form>
+            
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

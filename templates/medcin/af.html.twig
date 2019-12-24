@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrption{% endblock %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Matricule</th>
+            <th>Prenom</th>
+            <th>Nom</th>
+             <th>Tel</th>
+            <th>Date</th>
+            <th>Service</th>
+            <th>Specialite</th>
+             <th colsan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for afs in af %}
+        <tr>
+            
+            <td>{{afs.matricule}}</td>
+            <td>{{afs.prenom}}</td>
+            <td>{{afs.nom}}</td>
+            <td>{{afs.tel}}</td>
+            <td>{{afs.datenais|date('Y-m-d')}}</td>
+            <td>{{afs.service.libelle}}</td>
+            <td>{% for afs1 in afs.specialites %} {{afs1.libelle}}{% endfor %}</td>
+            <td><a name="" id="" class="btn btn-primary" href="{{ path("medcin_edit", {'id':afs.id}) }}" role="button">Editer</a></td>
+            <td>
+        <form methode="post" action="{{ path("medcin_sup", {'id':afs.id}) }}" style="display:inline-block"
+        onsubmit="return confirm('Vouler-Vous Vraiment supprimer')">
+          <input type="hidden" class="form-control" name="_method" value="DELETE" >
+           <input type="hidden" class="form-control" name="_token" value="{{csrf_token('delete' ~ afs.id)}}" >
+        <button class="btn btn-danger">Supprimer</button>
+        
+            
+            </form>
+            
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
